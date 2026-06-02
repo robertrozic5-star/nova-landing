@@ -115,7 +115,7 @@ body {
 /* ===== NOVA TITLE ===== */
 #nova-title {
   text-align: center;
-  padding: 20px 0 8px;
+  padding: 28px 0 14px;
   position: relative;
   z-index: 10;
 }
@@ -545,13 +545,7 @@ body {
     <canvas id="ring-canvas"></canvas>
   </div>
 
-  <!-- State Pill -->
-  <div id="nova-state">
-    <div class="state-pill" id="state-pill">
-      <div class="dot"></div>
-      <span id="state-text">BEREIT</span>
-    </div>
-  </div>
+  <!-- State pill moved to bottom -->
 
 </div>
 
@@ -580,7 +574,7 @@ body {
       </svg>
     </div>
 
-    <textarea id="input" placeholder="Nova fragen... z.B. ›Wie steht mein XAU Trade?‹" rows="1"></textarea>
+    <textarea id="input" placeholder="Nova fragen..." rows="1"></textarea>
 
     <!-- Mic icon -->
     <div class="input-icon" title="Sprache">
@@ -599,19 +593,11 @@ body {
     </button>
   </div>
 
-  <div class="quick-actions">
-    <button class="qa-btn" onclick="quickSend('Zeig mir meine Trades')">
-      <div class="qa-dot" style="background:#f59e0b"></div>TRADES
-    </button>
-    <button class="qa-btn" onclick="quickSend('Plane meinen Tag')">
-      <div class="qa-dot" style="background:#00e5ff"></div>TAG PLANEN
-    </button>
-    <button class="qa-btn" onclick="quickSend('Wie sieht der Markt aus?')">
-      <div class="qa-dot" style="background:#10b981"></div>MARKT
-    </button>
-    <button class="qa-btn" onclick="quickSend('Hilf mir mit Code')">
-      <div class="qa-dot" style="background:#8b5cf6"></div>CODE
-    </button>
+  <div style="display:flex; justify-content:center; margin-top:10px;">
+    <div class="state-pill" id="state-pill-bottom">
+      <div class="dot" id="bottom-dot"></div>
+      <span id="state-text-bottom">BEREIT</span>
+    </div>
   </div>
 </div>
 
@@ -743,27 +729,29 @@ function removeTyping() {
 }
 
 function setNovaState(state) {
-  const pill = document.getElementById('state-pill');
-  const text = document.getElementById('state-text');
+  const pill = document.getElementById('state-pill-bottom');
+  const text = document.getElementById('state-text-bottom');
+  const dot  = document.getElementById('bottom-dot');
+  if (!pill) return;
   isSpeaking = state === 'speaking';
   if (state === 'thinking') {
     text.textContent = 'VERARBEITE...';
     pill.style.borderColor = 'rgba(245,158,11,0.4)';
     pill.style.color = 'rgba(245,158,11,0.9)';
-    pill.querySelector('.dot').style.background = '#f59e0b';
-    pill.querySelector('.dot').style.boxShadow = '0 0 6px #f59e0b';
+    dot.style.background = '#f59e0b';
+    dot.style.boxShadow = '0 0 6px #f59e0b';
   } else if (state === 'speaking') {
     text.textContent = 'ANTWORTET';
     pill.style.borderColor = 'rgba(0,229,255,0.5)';
     pill.style.color = 'rgba(0,229,255,0.9)';
-    pill.querySelector('.dot').style.background = '#00e5ff';
-    pill.querySelector('.dot').style.boxShadow = '0 0 6px #00e5ff';
+    dot.style.background = '#00e5ff';
+    dot.style.boxShadow = '0 0 6px #00e5ff';
   } else {
     text.textContent = 'BEREIT';
     pill.style.borderColor = 'rgba(0,200,255,0.3)';
     pill.style.color = 'rgba(0,200,255,0.9)';
-    pill.querySelector('.dot').style.background = 'var(--blue)';
-    pill.querySelector('.dot').style.boxShadow = '0 0 6px var(--blue)';
+    dot.style.background = 'var(--blue)';
+    dot.style.boxShadow = '0 0 6px var(--blue)';
   }
 }
 
